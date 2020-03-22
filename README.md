@@ -35,9 +35,9 @@
 除了``index.vue``, 所有的``Component``文件都是以大写开头 (PascalCase)。
 
 ``` 例子：
-@/src/components/BackToTop/index.vue
-@/src/components/Charts/Line.vue
-@/src/views/example/components/Button.vue
+@/components/BackToTop/index.vue
+@/components/Charts/Line.vue
+@/views/example/components/Button.vue
 ```
 
 **JS 文件**
@@ -45,9 +45,9 @@
 所有的``.js``文件都遵循横线连接 (kebab-case)。
 
 ``` 例子：
-@/src/utils/open-window.js
-@/src/views/svg-icons/require-icons.js
-@/src/components/MarkdownEditor/default-options.js
+@/utils/open-window.js
+@/views/svg-icons/require-icons.js
+@/components/MarkdownEditor/default-options.js
 ```
 
 **Views**
@@ -55,6 +55,6 @@
 在views文件下，代表路由的.vue文件都使用横线连接 (kebab-case)，代表路由的文件夹也是使用同样的规则。
 
 ```
-@/src/views/svg-icons/index.vue
-@/src/views/svg-icons/require-icons.js
+@/views/svg-icons/index.vue
+@/views/svg-icons/require-icons.js
 ```
