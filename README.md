@@ -5,7 +5,7 @@
 - 多环境配置
 - 引入 CDN
 - 适配 rem
-- [Mock.js](https://github.com/nuysoft/Mock)
+- [Mock](https://github.com/nuysoft/Mock)
 - [Vant](https://github.com/youzan/vant)
 - [axios](https://github.com/axios/axios)
 - [Less](http://lesscss.org/usage/)
