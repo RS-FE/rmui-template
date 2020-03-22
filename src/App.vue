@@ -1,13 +1,31 @@
 <template>
   <div id="app">
-    <router-view />
+    <demo-nav />
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
+<script>
+import DemoNav from './components/DemoNav'
 
-<style>
+export default {
+  name: 'App',
+  components: {DemoNav}
+}
+</script>
+
+<style lang="less">
+@import './style/var';
+@import './style/base';
+
 body {
-  font-size: 16px;
-  background-color: #f8f8f8;
-  -webkit-font-smoothing: antialiased;
+  min-width: 100vw;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
 }
 </style>
