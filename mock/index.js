@@ -4,9 +4,14 @@ import {param2Obj} from '../src/utils'
 import {baseApi} from '../src/config'
 
 import user from './user'
-import list from './list'
+import meetingList from './meeting-list'
+import msgLIst from './msg-list'
+import addressList from './address-list'
+import emailList from './email-list'
+import normalForm from './normal-form'
+import receiveForm from './receive-form'
 
-const mocks = [...user, ...list]
+const mocks = [...user, ...meetingList, ...msgLIst, ...addressList, ...emailList, ...normalForm, ...receiveForm]
 
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,

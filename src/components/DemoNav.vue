@@ -21,7 +21,7 @@ export default {
   computed: {
     title() {
       const meta = this.$route.meta || {}
-      return meta.title !== '主页' ? meta.title : ''
+      return meta.customTitle ? '' : meta.title
     }
   },
 
@@ -40,6 +40,7 @@ export default {
   line-height: 56px;
   text-align: center;
   background-color: #fff;
+  box-shadow: 0 0 10px #cccccc;
 
   &__title {
     font-weight: 500;

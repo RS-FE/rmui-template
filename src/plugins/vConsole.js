@@ -1,5 +1,5 @@
-// 开发环境，使用 VConsole 调试
+// VConsole 调试
+import VConsole from 'vconsole'
 if (process.env.NODE_ENV !== 'production') {
-  const VConsole = require('vconsole/dist/vconsole.min.js')
   new VConsole()
 }

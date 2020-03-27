@@ -8,6 +8,7 @@
     "serve": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
+    "build:site": "vue-cli-service build --mode site",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
@@ -15,9 +16,11 @@
     "core-js": "^3.6.4",
     "lib-flexible": "^0.3.2",
     "regenerator-runtime": "^0.13.5",
-    "vant": "^2.4.7",
+    "vant": "^2.5.3",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
+    "vue-scroller": "^2.2.4",
+    "vue-tree-halower": "^1.8.3",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
@@ -31,6 +34,7 @@
     "babel-plugin-transform-remove-console": "^6.9.4",
     "chalk": "^3.0.0",
     "chokidar": "^3.3.1",
+    "compression-webpack-plugin": "^3.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.1.2",

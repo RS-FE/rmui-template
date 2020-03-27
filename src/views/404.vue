@@ -35,8 +35,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.wscn-http404-container {
-}
 .wscn-http404 {
   position: relative;
   width: 100%;

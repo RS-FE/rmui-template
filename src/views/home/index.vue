@@ -1,5 +1,5 @@
 <template>
-  <div class="demo-home">
+  <demo-section>
     <h1 class="demo-home__title">
       <img src="@/assets/home/logo-rmui.png" />
       <span>Risen-M</span>
@@ -10,11 +10,11 @@
     <template v-for="(group, index) in homeNav">
       <demo-home-nav :group="group" :key="index" />
     </template>
-  </div>
+  </demo-section>
 </template>
 
 <script>
-import DemoHomeNav from '@/components/DemoHomeNav'
+import DemoHomeNav from './DemoHomeNav.vue'
 
 export default {
   components: {
@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      description: '基于 Vant 开发的移动端组件库'
+      description: '基于 Vant 开发的移动端模板库'
     }
   },
   computed: {
@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .demo-home {
   box-sizing: border-box;
   width: 100%;

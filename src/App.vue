@@ -8,18 +8,41 @@
   </div>
 </template>
 <script>
-import DemoNav from './components/DemoNav'
-
 export default {
   name: 'App',
-  components: {DemoNav}
+  methods: {
+    siteInit() {
+      const that = this
+      window.addEventListener('message', e => {
+        if (e.data && typeof e.data === 'string' && e.data.indexOf('path') !== -1) {
+          const data = JSON.parse(e.data)
+          let hasRoutes = false
+          const routers = that.$router.options.routes
+          for (let i = 0; i < routers.length; i++) {
+            if (data.path === routers[i].path) {
+              hasRoutes = true
+              break
+            }
+          }
+          if (!hasRoutes) {
+            that.$router.replace({path: '/'}).catch(err => err)
+          } else if (hasRoutes && that.$router.currentRoute.path !== data.path) {
+            that.$router.replace({path: data.path}).catch(err => err)
+          }
+        }
+      })
+    }
+  },
+  mounted() {
+    // 文档模式, 配置为 iframe
+    if (process.env.NODE_ENV === 'site') {
+      this.siteInit()
+    }
+  }
 }
 </script>
 
 <style lang="less">
-@import './style/var';
-@import './style/base';
-
 body {
   min-width: 100vw;
 }

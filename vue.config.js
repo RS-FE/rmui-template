@@ -3,6 +3,11 @@ const path = require('path')
 const defaultSettings = require('./src/config/index.js')
 const name = defaultSettings.title || 'rmui-template'
 const port = 233
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const IS_PROD = ['production', 'site'].includes(process.env.NODE_ENV)
+const IS_DEV = ['development', 'staging'].includes(process.env.NODE_ENV)
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -10,14 +15,14 @@ function resolve(dir) {
 
 module.exports = {
   publicPath: './', // router hash 模式使用
-  // publicPath: process.env.NODE_ENV === 'development' ? '/' : '/app/', //router history模式使用 需要区分生产环境和开发环境，不然build会报错
+  // publicPath: IS_DEV ? '/' : '/app/', //router history模式使用 需要区分生产环境和开发环境，不然build会报错
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: IS_DEV,
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: true,    
+    open: true,
     overlay: {
       warnings: false,
       errors: true
@@ -26,7 +31,8 @@ module.exports = {
   },
 
   configureWebpack: config => {
-    if (process.env.NODE_ENV === 'production') {
+    const plugins = []
+    if (IS_PROD) {
       // externals里的模块不打包
       Object.assign(config, {
         name: name,
@@ -39,16 +45,24 @@ module.exports = {
         }
       })
     }
-    // 开发环境配置
-    // if (process.env.NODE_ENV === 'development') {
-    // }
+    if (IS_PROD) {
+      plugins.push(
+        new CompressionWebpackPlugin({
+          filename: '[path].gz[query]',
+          algorithm: 'gzip',
+          test: productionGzipExtensions,
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      )
+    }
+    config.plugins = [...config.plugins, ...plugins]
   },
   chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
 
-    config.resolve.alias
-      .set('@', resolve('src'))
+    config.resolve.alias.set('@', resolve('src'))
 
     const cdn = {
       dev: {
@@ -68,10 +82,10 @@ module.exports = {
       }
     }
     config.plugin('html').tap(args => {
-      if (process.env.NODE_ENV === 'production') {
+      if (IS_PROD) {
         args[0].cdn = cdn.build
       }
-      if (process.env.NODE_ENV === 'development') {
+      if (IS_DEV) {
         args[0].cdn = cdn.dev
       }
       return args
@@ -88,9 +102,9 @@ module.exports = {
       })
       .end()
 
-    config.when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-source-map'))
+    config.when(IS_DEV, config => config.devtool('cheap-source-map'))
 
-    config.when(process.env.NODE_ENV !== 'development', config => {
+    config.when(!IS_DEV, config => {
       config
         .plugin('ScriptExtHtmlWebpackPlugin')
         .after('html')
@@ -120,6 +134,14 @@ module.exports = {
         }
       })
       config.optimization.runtimeChunk('single')
+    })
+
+    config.when(!IS_DEV, config => {
+      config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
+        {
+          analyzerMode: 'static'
+        }
+      ])
     })
   }
 }

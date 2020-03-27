@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ArrowRight from '@/components/ArrowRight'
+import ArrowRight from './ArrowRight.vue'
 
 export default {
   components: {
@@ -24,7 +24,6 @@ export default {
   },
 
   props: {
-    lang: String,
     group: Object
   },
 
@@ -36,9 +35,7 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import '../style/var';
-
+<style lang="less" scoped>
 .demo-home-nav {
   &__title {
     margin: 24px 0 8px 16px;

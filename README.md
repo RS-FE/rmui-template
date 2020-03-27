@@ -58,3 +58,11 @@
 @/views/svg-icons/index.vue
 @/views/svg-icons/require-icons.js
 ```
+
+**其他**
+
+* vue 单文件组件内 import 其他资源时不要省略文件后缀。
+
+### 风格指南
+
+更多规范可参考官方[风格指南](https://cn.vuejs.org/v2/style-guide/)。

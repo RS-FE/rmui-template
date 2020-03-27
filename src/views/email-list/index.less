@@ -1,0 +1,63 @@
+.email-list {
+  font-size: 14px;
+  padding: 0 10px 50px;
+  .email-li {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #e6e6e6;
+    .checkSingle {
+      margin-right: 10px;
+    }
+    .email-img {
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 20px;
+      text-align: center;
+      color: #fff;
+      background-color: #1492ff;
+      border-radius: 50%;
+    }
+    .email-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-left: 15px;
+      .email-msg {
+        display: flex;
+        justify-content: space-between;
+        line-height: 16px;
+        height: 16px;
+        .email-sender {
+          color: #000;
+          font-weight: bold;
+          .reddot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #f00;
+            border-radius: 50%;
+            vertical-align: middle;
+          }
+        }
+        .email-time {
+          font-size: 12px;
+          .email-collect {
+            margin-bottom: 3px;
+          }
+        }
+      }
+      .email-intro {
+        width: 230px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+.search-bar{
+  margin-top: 5px;
+}
