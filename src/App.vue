@@ -25,9 +25,9 @@ export default {
             }
           }
           if (!hasRoutes) {
-            that.$router.replace({path: '/'}).catch(err => err)
+            that.$router.replace({path: '/'})
           } else if (hasRoutes && that.$router.currentRoute.path !== data.path) {
-            that.$router.replace({path: data.path}).catch(err => err)
+            that.$router.replace({path: data.path})
           }
         }
       })
