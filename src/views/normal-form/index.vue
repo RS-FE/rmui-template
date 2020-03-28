@@ -268,14 +268,14 @@ export default {
       }
     },
     licenseTypeAdt() {
-      if (this.licenseType) {
+      if (this.userData.licenseType) {
         return true
       } else {
         return false
       }
     },
     licenseAdt(val) {
-      if (this.licenseType === '护照') {
+      if (this.userData.licenseType === '护照') {
         return /(^[EeKkGgDdSsPpHh]\d{8}$)|(^(([Ee][a-fA-F])|([DdSsPp][Ee])|([Kk][Jj])|([Mm][Aa])|(1[45]))\d{7}$)/.test(
           val
         )
@@ -284,7 +284,7 @@ export default {
       }
     },
     idCardAdt(val) {
-      if (this.licenseType === '身份证') {
+      if (this.userData.licenseType === '身份证') {
         return /(^\d{8}(0\d|10|11|12)([0-2]\d|30|31)\d{3}$)|(^\d{6}(18|19|20)\d{2}(0\d|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)$)/.test(
           val
         )

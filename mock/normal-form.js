@@ -2,8 +2,8 @@ import Mock from 'mockjs'
 
 const formData = Mock.mock({
   username: '@cname',
-  'licenseType|1': ['护照', '身份证'],
-  licenseCode: '@id',
+  licenseType: '身份证',
+  licenseCode: /(^\d{8}(0\d|10|11|12)([0-2]\d|30|31)\d{3}$)|(^\d{6}(18|19|20)\d{2}(0\d|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)$)/,
   phone: /^1[3-9]\d{9}$/,
   isSick: '是',
   isDanger: '否',
