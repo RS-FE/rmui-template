@@ -2,62 +2,155 @@
   <div>
     <van-form @submit="onSubmit">
       <van-field
-        v-model="meetingMsg.govReq"
-        :rules="[{required: true, message: '请填写申请部门'}]"
+        required
+        input-align="right"
+        error-message-align="right"
+        v-model="meetingData.govReq"
         label="申请部门："
-        name="gov-req"
+        name="meeting-govReq"
         placeholder="请填写申请部门"
+        :rules="[{required: true, message: '请填写申请部门'}]"
       />
-      <van-field v-model="meetingMsg.govHost" label="主办部门：" name="govHost" placeholder="请填写主办部门" />
-      <van-field v-model="meetingMsg.meetingPlace" label="会议地点" name="meetingPlace" placeholder="请填写会议地点" />
-      <van-field v-model="meetingMsg.meetingTime" label="会议时间" name="meetingTime" placeholder="请填写会议时间" />
-      <van-field v-model="meetingMsg.meetingDate" label="天数" name="meetingDate" placeholder="请填写天数" />
-      <van-field v-model="meetingMsg.meetingTheme" label="会议主题" name="meetingTheme" placeholder="请填写会议主题" />
-      <van-field v-model="meetingMsg.meetingNum" label="参会人数" name="meetingNum" placeholder="请填写参会人数" />
       <van-field
-        v-model="meetingMsg.meetingArrvie"
-        label="到达时间"
-        name="meetingArrvie"
-        placeholder="请填写到达时间"
+        required
+        input-align="right"
+        error-message-align="right"
+        v-model="meetingData.govHost"
+        label="主办部门："
+        name="meeting-govHost"
+        placeholder="请填写主办部门"
+        :rules="[{required: true, message: '请填写主办部门'}]"
       />
-      <van-field name="checkboxGroup" label="会议级别：">
+      <van-field
+        required
+        input-align="right"
+        error-message-align="right"
+        v-model="meetingData.place"
+        label="会议地点："
+        name="meeting-place"
+        placeholder="请填写会议地点"
+        :rules="[{required: true, message: '请填写会议地点'}]"
+      />
+      <van-field
+        required
+        readonly
+        clickable
+        input-align="right"
+        error-message-align="right"
+        v-model="meetingData.time"
+        label="会议时间："
+        name="meeting-time"
+        placeholder="请填写会议时间"
+        :rules="[{required: true, trigger: 'onChange', message: '会议时间不能为空'}]"
+        @click="picker.time = true"
+      />
+      <van-popup v-model="picker.time" position="bottom">
+        <van-datetime-picker type="date" :min-date="minDate" @confirm="onConfirmTime" @cancel="picker.time = false" />
+      </van-popup>
+      <van-field
+        required
+        input-align="right"
+        error-message-align="right"
+        v-model="meetingData.days"
+        label="天数："
+        name="meeting-days"
+        placeholder="请填写天数"
+        :rules="[{required: true, validator: validatorNum, message: '请填写正确天数'}]"
+      />
+      <van-field
+        required
+        autosize
+        type="textarea"
+        rows="1"
+        input-align="right"
+        error-message-align="right"
+        v-model="meetingData.theme"
+        label="会议主题："
+        name="meeting-theme"
+        placeholder="请填写会议主题"
+        :rules="[{required: true, message: '请填写会议主题'}]"
+      />
+      <van-field
+        required
+        input-align="right"
+        error-message-align="right"
+        v-model="meetingData.num"
+        label="参会人数："
+        name="meeting-num"
+        placeholder="请填写参会人数"
+        :rules="[{required: true, validator: validatorNum, message: '请填写参会人数'}]"
+      />
+      <van-field
+        required
+        readonly
+        clickable
+        input-align="right"
+        error-message-align="right"
+        v-model="meetingData.arrive"
+        label="到达时间："
+        name="meeting-arrive"
+        placeholder="请填写到达时间"
+        :rules="[{required: true, message: '请填写到达时间'}]"
+        @click="picker.arrive = true"
+      />
+      <van-popup v-model="picker.arrive" position="bottom">
+        <van-datetime-picker
+          type="date"
+          :min-date="minDate"
+          @confirm="onConfirmArrive"
+          @cancel="picker.arrive = false"
+        />
+      </van-popup>
+      <van-field input-align="right" name="meeting-secrecy" label="保密：">
         <template #input>
-          <van-checkbox-group v-model="checkboxGroup">
-            <van-checkbox name="1" shape="square">大型会议</van-checkbox>
-            <van-checkbox name="2" shape="square">中型会议</van-checkbox>
-            <van-checkbox name="3" shape="square">小型会议</van-checkbox>
-          </van-checkbox-group>
+          <van-switch v-model="meetingData.secrecy" size="20" />
         </template>
       </van-field>
-      <van-field name="switch" label="保密：">
+      <div class="van-cell van-cell--required lable-title">
+        会议级别：
+      </div>
+      <van-field
+        error-message-align="right"
+        name="meeting-level"
+        :rules="[{required: true, trigger: 'onChange', message: '请选择会议级别'}]"
+      >
         <template #input>
-          <van-switch v-model="switchChecked" size="20" />
+          <van-radio-group v-model="meetingData.level" direction="horizontal">
+            <van-radio name="大型会议">大型会议</van-radio>
+            <van-radio name="中型会议">中型会议</van-radio>
+            <van-radio name="小型会议">小型会议</van-radio>
+          </van-radio-group>
         </template>
       </van-field>
-      <p class="title">场地布置：</p>
-      <van-field class="lable-title" label="会场布置："></van-field>
-      <van-field name="checkboxGroup2">
-        <template #input>
-          <van-checkbox-group v-model="checkboxGroup2" direction="horizontal">
-            <van-checkbox name="1" shape="square">签到台</van-checkbox>
-            <van-checkbox name="2" shape="square">课桌型</van-checkbox>
-            <van-checkbox name="3" shape="square">回型</van-checkbox>
-          </van-checkbox-group>
-        </template>
-      </van-field>
-      <van-field class="lable-title" label="会议设备："></van-field>
-      <van-field name="checkboxGroup3">
-        <template #input>
-          <van-checkbox-group v-model="checkboxGroup3" direction="horizontal">
-            <van-checkbox name="1" shape="square">投影仪</van-checkbox>
-            <van-checkbox name="2" shape="square">相机</van-checkbox>
-            <van-checkbox name="3" shape="square">传真机</van-checkbox>
-            <van-checkbox name="4" shape="square">插线板</van-checkbox>
-            <van-checkbox name="5" shape="square">激光笔</van-checkbox>
-            <van-checkbox name="6" shape="square">影响设备</van-checkbox>
-          </van-checkbox-group>
-        </template>
-      </van-field>
+      <van-cell-group title="场地布置：">
+        <div class="van-cell lable-title">
+          会场布置：
+        </div>
+        <van-field name="meeting-decorate">
+          <template #input>
+            <van-checkbox-group v-model="meetingData.decorate" direction="horizontal">
+              <van-checkbox name="签到台" shape="square">签到台</van-checkbox>
+              <van-checkbox name="课桌型" shape="square">课桌型</van-checkbox>
+              <van-checkbox name="回型" shape="square">回型</van-checkbox>
+            </van-checkbox-group>
+          </template>
+        </van-field>
+        <div class="van-cell lable-title">
+          会议设备：
+        </div>
+        <van-field name="meeting-equip">
+          <template #input>
+            <van-checkbox-group v-model="meetingData.equip" direction="horizontal">
+              <van-checkbox name="投影仪" shape="square">投影仪</van-checkbox>
+              <van-checkbox name="相机" shape="square">相机</van-checkbox>
+              <van-checkbox name="传真机" shape="square">传真机</van-checkbox>
+              <van-checkbox name="插线板" shape="square">插线板</van-checkbox>
+              <van-checkbox name="激光笔" shape="square">激光笔</van-checkbox>
+              <van-checkbox name="音响设备" shape="square">音响设备</van-checkbox>
+            </van-checkbox-group>
+          </template>
+        </van-field>
+      </van-cell-group>
       <div style="margin: 16px;">
         <van-button round block type="info" native-type="submit">
           提交
@@ -68,30 +161,65 @@
 </template>
 
 <script>
+import {parseTime} from '@/utils/index.js'
+import {getMeetingForm} from '@/api/meeting-form.js'
 export default {
   data() {
     return {
-      meetingMsg: {
-        govReq: '',
-        govHost: '',
-        meetingPlace: '',
-        meetingTime: '',
-        meetingDate: '',
-        meetingTheme: '',
-        meetingNum: '',
-        meetingArrvie: ''
+      picker: {
+        time: false,
+        arrive: false
       },
-      checkboxGroup: [],
-      checkboxGroup2: [],
-      checkboxGroup3: [],
-      switchChecked: false
+      meetingData: {
+        govReq: '申请部门',
+        govHost: '主办部门',
+        place: '会议地点',
+        time: '2020-03-31',
+        days: '1',
+        theme: '会议主题',
+        num: '10',
+        arrive: '2020-03-31',
+        level: '小型会议',
+        secrecy: true,
+        decorate: ['签到台'],
+        equip: ['投影仪', '插线板', '激光笔']
+      }
+    }
+  },
+  computed: {
+    minDate() {
+      return new Date()
     }
   },
   methods: {
+    init() {
+      getMeetingForm()
+        .then(res => {
+          console.log(res)
+          this.meetingData = res.data
+        })
+        .catch(() => {
+          this.$toast.fail('获取数据失败')
+        })
+    },
     onSubmit(values) {
       console.log(values)
       this.$toast.success('控制台查看提交信息')
+    },
+    onConfirmTime(time) {
+      this.meetingData.time = parseTime(time, '{y}-{m}-{d}')
+      this.picker.time = false
+    },
+    onConfirmArrive(time) {
+      this.meetingData.arrive = parseTime(time, '{y}-{m}-{d}')
+      this.picker.arrive = false
+    },
+    validatorNum(val) {
+      return /^[0-9]*$/.test(val)
     }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>

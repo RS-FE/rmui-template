@@ -3,7 +3,11 @@
     <custom-nav />
     <van-form>
       <form action="/">
-        <van-search v-model="searchValue" show-action placeholder="请输入人名" @input="onSearch" class="search-bar" />
+        <van-search v-model="searchValue" show-action placeholder="请输入人名">
+          <template #action>
+            <div @click="onSearch">搜索</div>
+          </template>
+        </van-search>
       </form>
       <ul class="email-list">
         <van-checkbox-group v-model="checkboxArray" ref="checkboxGroup">
@@ -18,7 +22,9 @@
           >
             <van-checkbox v-if="operaMode" :name="item" :ref="item.id" class="checkSingle"></van-checkbox>
             <div class="email-img">
-              {{ item.name.split('')[0] }}
+              <!-- {{ item.name.split('')[0] }} -->
+              <img v-if="item.hasread" src="@/assets/email-list/notread.png" alt="" />
+              <img v-else src="@/assets/email-list/hasread.png" alt="" />
             </div>
             <div class="email-content">
               <p class="email-msg">
@@ -32,7 +38,11 @@
                 </span>
               </p>
               <p class="email-intro">
-                {{ item.content }}
+                <span class="email-text">{{ item.content }}</span>
+                <img v-if="item.attach" src="@/assets/email-list/enclosure.png" alt="" class="email-enclosure" />
+              </p>
+              <p class="email-reply">
+                {{ item.reply }}
               </p>
             </div>
           </li>
@@ -90,13 +100,19 @@ export default {
   methods: {
     init() {
       getEmailList()
-        .then(res => {
+        .then(res => {console.log(res)
           this.initData = res.data.emailData
           this.emailData = res.data.emailData
         })
         .catch(() => {})
     },
+    goDetail(itemId, e) {
+      if (this.operaMode == false) {
+        console.log(itemId, e.currentTarget)
+      }
+    },
     onSearch() {
+      this.checkboxArray = []
       if (this.searchValue) {
         var searchArr = []
         for (var i = 0; i < this.initData.length; i++) {
@@ -104,18 +120,15 @@ export default {
             searchArr.push(this.initData[i])
           }
         }
-      }
-      if (this.searchValue) {
         this.emailData = searchArr
       } else {
         this.emailData = this.initData
       }
     },
     chooseSingle(itemId) {
-      this.$refs[itemId][0].toggle()
-    },
-    goDetail(itemId, e) {
-      console.log(itemId, e.currentTarget)
+      if (this.operaMode == true) {
+        this.$refs[itemId][0].toggle()
+      }
     },
     chooseAll() {
       if (this.checkboxArray.length == this.emailData.length) {
@@ -177,7 +190,7 @@ export default {
       var emailData = this.emailData
       var checkboxArray = this.checkboxArray
       var arr = [...emailData].filter(x => [...checkboxArray].every(y => y.id !== x.id))
-      var arr2 = [...initData].filter(x => [...arr].every(y => y.id !== x.id))
+      var arr2 = [...initData].filter(x => [...checkboxArray].every(y => y.id !== x.id))
       this.emailData = arr
       this.initData = arr2
     }

@@ -1,8 +1,16 @@
 <template>
   <demo-section>
-    <van-form @submit="onSubmit">
+    <van-form
+      ref="vanForm"
+      @submit="onSubmit"
+      validate-first
+      validate-trigger="onBlur"
+      input-align="right"
+      error-message-align="right"
+    >
       <van-cell-group class="van-cell-group">
         <van-field
+          required
           is-link
           readonly
           clickable
@@ -24,6 +32,7 @@
       </van-cell-group>
       <van-cell-group class="van-cell-group">
         <van-field
+          required
           v-model="userData.receiveCode"
           name="receiveCode"
           label="收文编号："
@@ -31,12 +40,13 @@
           :rules="[{required: true, message: '收文编号不能为空'}]"
         />
         <van-field
+          required
           is-link
           readonly
           clickable
           name="receiveDate"
           :value="userData.receiveDate"
-          label="收文日期"
+          label="收文日期："
           placeholder="请选择"
           @click="receiveDate.showPicker = true"
           :rules="[{required: true, trigger: 'onChange', message: '收文日期不能为空'}]"
@@ -50,6 +60,7 @@
           />
         </van-popup>
         <van-field
+          required
           is-link
           readonly
           clickable
@@ -69,6 +80,7 @@
           />
         </van-popup>
         <van-field
+          required
           is-link
           readonly
           clickable
@@ -90,6 +102,7 @@
       </van-cell-group>
       <van-cell-group class="van-cell-group">
         <van-field
+          required
           is-link
           readonly
           clickable
@@ -109,6 +122,7 @@
           />
         </van-popup>
         <van-field
+          required
           is-link
           readonly
           clickable
@@ -123,12 +137,13 @@
           <van-picker show-toolbar :columns="from.columns" @cancel="from.showPicker = false" @confirm="onConfirmFrom" />
         </van-popup>
         <van-field
+          required
           is-link
           readonly
           clickable
           name="fileDate"
           :value="userData.fileDate"
-          label="文件日期"
+          label="文件日期："
           placeholder="请选择"
           @click="fileDate.showPicker = true"
           :rules="[{required: true, trigger: 'onChange', message: '文件日期不能为空'}]"
@@ -142,6 +157,7 @@
           />
         </van-popup>
         <van-field
+          required
           v-model="userData.signPerson"
           name="signPerson"
           label="签发人："
@@ -151,6 +167,7 @@
       </van-cell-group>
       <van-cell-group class="van-cell-group">
         <van-field
+          required
           v-model="userData.articleCode"
           name="articleCode"
           label="来文字号："
@@ -158,6 +175,7 @@
           :rules="[{required: true, message: '来文字号不能为空'}]"
         />
         <van-field
+          required
           rows="1"
           autosize
           type="textarea"
@@ -180,7 +198,7 @@
       <div class="van-uploader-group">
         <div class="van-uploader-title">文件上传</div>
         <div class="van-uploader-content">
-          <van-field name="fileList" label="文件上传">
+          <van-field input-align="left" error-message-align="left" name="fileList" label="文件上传">
             <template #input>
               <van-uploader v-model="userData.fileList" accept="*" />
             </template>
@@ -188,7 +206,8 @@
         </div>
       </div>
       <div class="van-button-group">
-        <van-button round block type="info" native-type="submit">保存</van-button>
+        <van-button type="info" native-type="submit">提交</van-button>
+        <van-button class="vant-button-gray" native-type="reset" @click="onReset">重置</van-button>
       </div>
     </van-form>
   </demo-section>
@@ -200,8 +219,6 @@ import {getFormData, submitFormData} from '@/api/receive-form.js'
 export default {
   data() {
     return {
-      isSick: false,
-      isDanger: false,
       receiveType: {
         showPicker: false,
         columns: ['公文', '其他']
@@ -310,6 +327,29 @@ export default {
         .catch(() => {
           this.$toast.fail('提交失败')
         })
+    },
+    onReset() {
+      const defaultData = {
+        userData: {
+          receiveType: '',
+          receiveCode: '',
+          receiveDate: '',
+          dealType: '',
+          hurryType: '',
+          secret: '',
+          from: '',
+          fileDate: '',
+          signPerson: '',
+          articleCode: '',
+          articleTitle: '',
+          articleOther: '',
+          fileList: []
+        }
+      }
+      this.userData = defaultData.userData
+      setTimeout(() => {
+        this.$refs.vanForm.resetValidation()
+      })
     }
   }
 }
@@ -320,7 +360,21 @@ export default {
   margin-top: 16px;
 }
 .van-button-group {
-  margin: 16px;
+  margin: 16px 16px 0;
+  display: flex;
+  button {
+    flex: 1;
+  }
+  button + button {
+    margin-left: 10px;
+  }
+  .van-button {
+    border-radius: 3px;
+  }
+  .vant-button-gray {
+    background: #ccc;
+    color: #fff;
+  }
 }
 .van-uploader-group {
   margin-top: 16px;

@@ -1,12 +1,14 @@
 import Mock from 'mockjs'
 
 const emailList = Mock.mock({
-  'items|5-15': [
+  'items|15': [
     {
       id: '@id',
       name: '@cname',
       time: '@datetime',
       content: '@cparagraph(1,2)',
+      reply: '@cparagraph(1,2)',
+      attach: '@boolean',
       hasread: '@boolean',
       hascollected: '@boolean'
     }

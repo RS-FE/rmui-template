@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 
-const meetiongList = Mock.mock({
+const meetingList = Mock.mock({
   'items|8': [
     {
       id: '@id',
@@ -35,10 +35,10 @@ const meetiongList = Mock.mock({
 export default [
   // 会议室预约
   {
-    url: '/rmui-template/meeting-list/meetiongList',
+    url: '/rmui-template/meeting-list/meetingList',
     type: 'get',
     response: config => {
-      const items = meetiongList.items
+      const items = meetingList.items
       return {
         code: 20000,
         data: {
@@ -47,5 +47,5 @@ export default [
         }
       }
     }
-  },
+  }
 ]

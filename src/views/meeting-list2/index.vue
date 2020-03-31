@@ -80,7 +80,7 @@
   </div>
 </template>
 <script>
-import {getMeetiongList} from '@/api/meeting-list.js'
+import {getmeetingList} from '@/api/meeting-list.js'
 export default {
   data() {
     return {
@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     init() {
-      getMeetiongList()
+      getmeetingList()
         .then(res => {
           this.data = res.data.items
         })

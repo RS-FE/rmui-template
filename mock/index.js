@@ -10,8 +10,20 @@ import addressList from './address-list'
 import emailList from './email-list'
 import normalForm from './normal-form'
 import receiveForm from './receive-form'
+import meetingForm from './meeting-form'
+import emailForm from './email-form'
 
-const mocks = [...user, ...meetingList, ...msgLIst, ...addressList, ...emailList, ...normalForm, ...receiveForm]
+const mocks = [
+  ...user,
+  ...meetingList,
+  ...msgLIst,
+  ...addressList,
+  ...emailList,
+  ...normalForm,
+  ...receiveForm,
+  ...meetingForm,
+  ...emailForm
+]
 
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,

@@ -12,6 +12,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "@vant/touch-emulator": "^1.2.0",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "lib-flexible": "^0.3.2",

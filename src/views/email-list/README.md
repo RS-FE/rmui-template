@@ -1,10 +1,6 @@
-# emailList 邮件列表
+# EmailList 邮件列表
 
 ## 基础用法
-
-```html
-<emailList :emailData="emailData"></emailList>
-```
 
 ```js
 export default {
@@ -13,7 +9,7 @@ export default {
       emailData: [
         {
           id: '1',
-          name: '黄祥',
+          name: 'name1',
           time: '3月22日 11:11',
           content: '邮件内容1',
           hasread: 'true',
@@ -21,7 +17,7 @@ export default {
         },
         {
           id: '2',
-          name: '郑芳',
+          name: 'name2',
           time: '3月22日 11:12',
           content: '邮件内容2邮件内容2邮件内容2',
           hasread: 'true',
@@ -29,7 +25,7 @@ export default {
         },
         {
           id: '3',
-          name: '谭肖',
+          name: 'name3',
           time: '3月22日 11:13',
           content: '邮件内容3邮件内容3邮件内容3邮件内容3邮件内容3',
           hasread: 'true',
@@ -45,9 +41,9 @@ export default {
 
 ### Props
 
-| 参数      | 说明     | 类型    |
-| --------- | -------- | ------- |
-| emailData | 菜单选项 | `Array` |
+| 参数      | 说明         | 类型    |
+| --------- | ------------ | ------- |
+| emailData | 邮件列表数据 | `Array` |
 
 ### emailData 数据结构
 

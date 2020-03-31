@@ -1,11 +1,16 @@
 <template>
   <demo-section>
-    <van-form @submit="onSubmit">
+    <van-form
+      ref="vanForm"
+      @submit="onSubmit"
+      validate-first
+      validate-trigger="onBlur"
+      input-align="right"
+      error-message-align="right"
+    >
       <van-cell-group title="基本信息">
         <van-field
           required
-          input-align="right"
-          error-message-align="right"
           v-model="userData.username"
           name="username"
           label="姓名"
@@ -17,8 +22,6 @@
           is-link
           readonly
           clickable
-          input-align="right"
-          error-message-align="right"
           name="licenseType"
           label="证件类型"
           :value="userData.licenseType"
@@ -36,8 +39,6 @@
         </van-popup>
         <van-field
           required
-          input-align="right"
-          error-message-align="right"
           v-model="userData.licenseCode"
           name="licenseCode"
           label="证件号码"
@@ -51,8 +52,6 @@
         />
         <van-field
           required
-          input-align="right"
-          error-message-align="right"
           v-model="userData.phone"
           type="number"
           name="phone"
@@ -84,8 +83,6 @@
           is-link
           readonly
           clickable
-          input-align="right"
-          error-message-align="right"
           name="date"
           :value="userData.date"
           label="拟到达时间"
@@ -106,8 +103,6 @@
           is-link
           readonly
           clickable
-          input-align="right"
-          error-message-align="right"
           name="area"
           label="出发地"
           :value="userData.area"
@@ -118,14 +113,7 @@
         <van-popup v-model="area.showArea" position="bottom">
           <van-area :area-list="area.areaList" @confirm="onConfirmArea" @cancel="area.showArea = false" />
         </van-popup>
-        <van-field
-          required
-          name="trafficType"
-          label="交通方式"
-          input-align="right"
-          error-message-align="right"
-          :rules="[{required: true, trigger: 'onChange', message: '请选择交通方式'}]"
-        >
+        <van-field required name="trafficType" label="交通方式" :rules="[{required: true, message: '请选择交通方式'}]">
           <template #input>
             <van-checkbox-group v-model="userData.trafficType" direction="horizontal">
               <van-checkbox name="airplane" shape="square">飞机</van-checkbox>
@@ -138,8 +126,6 @@
         <van-field
           v-if="userData.trafficType && userData.trafficType.indexOf('airplane') !== -1"
           required
-          input-align="right"
-          error-message-align="right"
           v-model="userData.airplane"
           name="airplane"
           label="飞机"
@@ -152,8 +138,6 @@
         <van-field
           v-if="userData.trafficType && userData.trafficType.indexOf('train') !== -1"
           required
-          input-align="right"
-          error-message-align="right"
           v-model="userData.train"
           name="train"
           label="火车"
@@ -166,8 +150,6 @@
         <van-field
           v-if="userData.trafficType && userData.trafficType.indexOf('bus') !== -1"
           required
-          input-align="right"
-          error-message-align="right"
           v-model="userData.bus"
           name="bus"
           label="汽车"
@@ -180,8 +162,6 @@
         <van-field
           v-if="userData.trafficType && userData.trafficType.indexOf('car') !== -1"
           required
-          input-align="right"
-          error-message-align="right"
           v-model="userData.car"
           name="car"
           label="自驾"
@@ -193,7 +173,8 @@
         />
       </van-cell-group>
       <div class="van-button-group">
-        <van-button round block type="info" native-type="submit">提交</van-button>
+        <van-button type="info" native-type="submit">提交</van-button>
+        <van-button class="vant-button-gray" native-type="reset" @click="onReset">重置</van-button>
       </div>
     </van-form>
   </demo-section>
@@ -347,6 +328,33 @@ export default {
         .catch(() => {
           this.$toast.fail('提交失败')
         })
+    },
+    onReset() {
+      const defaultData = {
+        isSick: false,
+        isDanger: false,
+        userData: {
+          username: '',
+          licenseCode: '',
+          phone: '',
+          isSick: '否',
+          isDanger: '否',
+          licenseType: '',
+          date: '',
+          area: '',
+          trafficType: [],
+          airplane: '',
+          train: '',
+          bus: '',
+          car: ''
+        }
+      }
+      this.isSick = defaultData.isSick
+      this.isDanger = defaultData.isDanger
+      this.userData = defaultData.userData
+      setTimeout(() => {
+        this.$refs.vanForm.resetValidation()
+      })
     }
   }
 }
@@ -354,7 +362,21 @@ export default {
 
 <style lang="less" scoped>
 .van-button-group {
-  margin: 16px;
+  margin: 16px 16px 0;
+  display: flex;
+  button {
+    flex: 1;
+  }
+  button + button {
+    margin-left: 10px;
+  }
+  .van-button {
+    border-radius: 3px;
+  }
+  .vant-button-gray {
+    background: #ccc;
+    color: #fff;
+  }
 }
 /deep/ .van-checkbox--horizontal {
   margin-right: 10px;

@@ -2,44 +2,63 @@
   <div>
     <van-form @submit="onSubmit">
       <van-field
-        readonly
-        clickable
+        required
+        autosize
+        type="textarea"
+        rows="1"
         name="receiver"
-        :value="receivervalue"
-        label="发件人："
-        right-icon="add"
-        placeholder="点击选择收件人"
-        @click="showReceiver = true"
-      />
-      <van-field
-        readonly
-        clickable
-        name="sender"
-        :value="sendervalue"
         label="收件人："
-        right-icon="arrow-down"
-        placeholder="点击选择发件人"
-        @click="showSender = true"
+        input-align="right"
+        error-message-align="right"
+        v-model="emailData.receiver"
+        placeholder="点击选择收件人"
+        :rules="[{required: true, message: '请填写收件人'}]"
       />
       <van-field
-        v-model="text"
-        :rules="[{required: true, message: '请填写标题'}]"
-        label="标题："
+        required
+        autosize
+        type="textarea"
+        rows="1"
+        name="sender"
+        label="发件人："
+        input-align="right"
+        error-message-align="right"
+        v-model="emailData.sender"
+        placeholder="点击选择发件人"
+        :rules="[{required: true, message: '请填写收件人'}]"
+      />
+      <van-field
+        required
+        autosize
+        type="textarea"
+        rows="1"
         name="title"
+        label="标题："
+        input-align="right"
+        error-message-align="right"
+        v-model="emailData.title"
         placeholder="请输入邮件标题"
+        :rules="[{required: true, message: '请填写邮件标题'}]"
       />
       <div style="margin: 16px 0;">
         <div class="van-cell lable-title">
           正文内容：
         </div>
-        <van-field v-model="textarea" rows="3" autosize type="textarea" placeholder="请输入你的内容" name="textarea" />
+        <van-field
+          autosize
+          rows="3"
+          type="textarea"
+          name="textarea"
+          v-model="emailData.text"
+          placeholder="请输入你的内容"
+        />
       </div>
       <div class="van-cell lable-title">
         文件上传：
       </div>
       <van-field name="uploader">
         <template #input>
-          <van-uploader v-model="uploader" />
+          <van-uploader v-model="emailData.enclosure" />
         </template>
       </van-field>
       <div style="margin: 16px;">
@@ -47,50 +66,41 @@
           提交
         </van-button>
       </div>
-      <!-- 弹出层 -->
-      <van-popup v-model="showReceiver" position="bottom">
-        <van-picker show-toolbar :columns="columns" @confirm="onConfirmReceiver" @cancel="showReceiver = false" />
-      </van-popup>
-      <van-popup v-model="showSender" position="bottom">
-        <van-picker
-          show-toolbar
-          :columns="columns"
-          default-index="1"
-          @confirm="onConfirmSender"
-          @cancel="showSender = false"
-        />
-      </van-popup>
     </van-form>
   </div>
 </template>
 
 <script>
+import {getEmailForm} from '@/api/email-form.js'
 export default {
   data() {
     return {
-      receivervalue: '',
-      sendervalue: '',
-      columns: ['王力', '郑芳', '谭肖', '黄祥'],
-      columns2: ['王力1', '郑芳1', '谭肖1', '黄祥1'],
-      showReceiver: false,
-      showSender: false,
-      text: '',
-      textarea: '',
-      uploader: [{url: 'https://img.yzcdn.cn/vant/leaf.jpg'}]
+      emailData: {
+        receiver: '收件人',
+        sender: '发件人',
+        title: '邮件标题',
+        text: '邮件正文',
+        enclosure: [{url: 'https://img.yzcdn.cn/vant/leaf.jpg'}]
+      }
     }
   },
+  mounted() {
+    this.init()
+  },
   methods: {
+    init() {
+      getEmailForm()
+        .then(res => {
+          this.emailData = res.data
+          console.log(res)
+        })
+        .catch(() => {
+          this.$toast.fail('获取数据失败')
+        })
+    },
     onSubmit(values) {
       console.log(values)
       this.$toast.success('控制台查看提交信息')
-    },
-    onConfirmReceiver(value) {
-      this.receivervalue = value
-      this.showReceiver = false
-    },
-    onConfirmSender(value) {
-      this.sendervalue = value
-      this.showSender = false
     }
   }
 }

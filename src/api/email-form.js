@@ -2,10 +2,10 @@
 import request from '@/utils/request'
 // api
 
-// 会议室获取数据
-export function getmeetingList(params) {
+// 邮件表单获取数据
+export function getEmailForm(params) {
   return request({
-    url: '/rmui-template/meeting-list/meetingList',
+    url: '/rmui-template/email-form/getform',
     method: 'get',
     params: params
   })

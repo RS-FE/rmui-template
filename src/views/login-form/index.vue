@@ -1,8 +1,9 @@
 <template>
   <div class="login-container">
     <div class="login-title">手机登录</div>
-    <van-form class="login-form" validate-first @submit="onSubmit" @failed="onFailed">
+    <van-form class="login-form" ref="vanForm" @submit="onSubmit" validate-first validate-trigger="onBlur">
       <van-field
+        clearable
         type="number"
         v-model="phone"
         name="phone"
@@ -14,6 +15,7 @@
         ]"
       />
       <van-field
+        clearable
         class="van-cell-yzm"
         type="number"
         v-model="vfCode"
@@ -31,7 +33,7 @@
       </van-field>
       <div class="btn-group">
         <van-button class="btn-primary" round block type="info" native-type="submit">
-          保&nbsp;存
+          登&nbsp;录
         </van-button>
       </div>
     </van-form>
@@ -87,9 +89,6 @@ export default {
     },
     vfcodeAdt(val) {
       return /^\d{4}$/.test(val)
-    },
-    onFailed(errorInfo) {
-      console.log('failed', errorInfo)
     },
     onSubmit(values) {
       console.log('submit', values)

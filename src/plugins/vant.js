@@ -26,7 +26,9 @@ import {
   Switch,
   SwitchCell,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  Radio,
+  RadioGroup
 } from 'vant'
 Vue.use(Button)
 Vue.use(Cell)
@@ -54,3 +56,5 @@ Vue.use(Switch)
 Vue.use(SwitchCell)
 Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
+Vue.use(Radio)
+Vue.use(RadioGroup)
