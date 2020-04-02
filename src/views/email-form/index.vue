@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {getEmailForm} from '@/api/email-form.js'
+import {getData, submitData} from '@/api/email-form.js'
 export default {
   data() {
     return {
@@ -89,18 +89,30 @@ export default {
   },
   methods: {
     init() {
-      getEmailForm()
+      getData()
         .then(res => {
-          this.emailData = res.data
           console.log(res)
+          this.emailData = res.data
         })
         .catch(() => {
           this.$toast.fail('获取数据失败')
         })
     },
     onSubmit(values) {
-      console.log(values)
-      this.$toast.success('控制台查看提交信息')
+      console.log('submit', values)
+      const that = this
+      submitData(values)
+        .then(() => {
+          that.$toast.success({
+            message: '提交成功',
+            onClose() {
+              // that.$router.push({path: '/home'}).catch(err => err)
+            }
+          })
+        })
+        .catch(() => {
+          this.$toast.fail('提交失败')
+        })
     }
   }
 }

@@ -1,57 +1,48 @@
 # EmailList 邮件列表
 
-## 基础用法
+### 接口函数
 
 ```js
-export default {
-  data() {
-    return {
-      emailData: [
-        {
-          id: '1',
-          name: 'name1',
-          time: '3月22日 11:11',
-          content: '邮件内容1',
-          hasread: 'true',
-          hascollected: 'false'
-        },
-        {
-          id: '2',
-          name: 'name2',
-          time: '3月22日 11:12',
-          content: '邮件内容2邮件内容2邮件内容2',
-          hasread: 'true',
-          hascollected: 'false'
-        },
-        {
-          id: '3',
-          name: 'name3',
-          time: '3月22日 11:13',
-          content: '邮件内容3邮件内容3邮件内容3邮件内容3邮件内容3',
-          hasread: 'true',
-          hascollected: 'false'
-        }
-      ]
-    }
-  }
+// 邮件列表获取数据
+export function getData(params) {
+  return request({
+    url: '/rmui-template/email-list/emailList',
+    method: 'get',
+    params: params
+  })
 }
 ```
 
-## API
+## 获取列表数据
 
-### Props
+### 请求地址 url
 
-| 参数      | 说明         | 类型    |
-| --------- | ------------ | ------- |
-| emailData | 邮件列表数据 | `Array` |
+    /rmui-template/email-list/emailList
+
+### 请求类型 method
+
+`GET`
+
+### 请求参数 request
+
+| 名称 | 类型 | 必填 | 默认值 | 描述 |
+| ---- | ---- | ---- | ------ | ---- |
+| -    | -    | -    | -      | -    |
+
+### 响应参数 response
+
+| 参数      | 类型    | 描述         |
+| --------- | ------- | ------------ |
+| emailData | `Array` | 邮件列表数据 |
 
 ### emailData 数据结构
 
-| 键名         | 说明     | 类型      |
-| ------------ | -------- | --------- |
-| id           | 唯一标识 | _string_  |
-| name         | 发送人名 | _string_  |
-| time         | 发送时间 | _string_  |
-| content      | 发送内容 | _string_  |
-| hasread      | 是否已读 | _boolean_ |
-| hascollected | 是否收藏 | _boolean_ |
+| 名称         | 类型      | 必填   | 默认值 | 可选值 | 描述     |
+| ------------ | --------- | ------ | ------ | ------ | -------- |
+| id           | _string_  | `true` | -      | -      | 唯一标识 |
+| name         | _string_  | `true` | -      | -      | 发送人名 |
+| time         | _string_  | `true` | -      | -      | 发送时间 |
+| text         | _string_  | `true` | -      | -      | 发送内容 |
+| attach       | _boolean_ | `true` | -      | -      | 有无附件 |
+| hasread      | _boolean_ | `true` | -      | -      | 是否已读 |
+| hascollected | _boolean_ | `true` | -      | -      | 是否收藏 |

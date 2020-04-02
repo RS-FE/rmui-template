@@ -1,10 +1,23 @@
-# NormalList 通用列表
+# MsgList 消息提醒列表
 
-## 获取会议室预约数据
+### 接口函数
+
+```js
+// 消息列表获取数据
+export function getMsgList(params) {
+  return request({
+    url: '/rmui-template/msg-list/msgList',
+    method: 'get',
+    params: params
+  })
+}
+```
+
+## 获取消息提醒数据
 
 ### 请求地址 url
 
-    /rmui-template/msg-list/getMsgList
+    /rmui-template/msg-list/msgList
 
 ### 请求类型 method
 
@@ -23,6 +36,7 @@
 | time    | _string_ | `true` | -      | -      | 时间             |
 | data    | _Array_  | `true` | -      | -      | 当前日期消息数据 |
 | title   | _string_ | `true` | -      | -      | 消息标题         |
+| content | _string_ | `true` | -      | -      | 消息内容         |
 | name    | _string_ | `true` | -      | -      | 姓名             |
 | time    | _string_ | `true` | -      | -      | 打卡时间         |
 | day     | _Object_ | `true` | -      | -      | 打卡日期         |

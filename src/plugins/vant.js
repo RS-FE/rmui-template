@@ -28,7 +28,9 @@ import {
   Checkbox,
   CheckboxGroup,
   Radio,
-  RadioGroup
+  RadioGroup,
+  Notify,
+  Dialog
 } from 'vant'
 Vue.use(Button)
 Vue.use(Cell)
@@ -58,3 +60,5 @@ Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
 Vue.use(Radio)
 Vue.use(RadioGroup)
+Vue.use(Notify)
+Vue.use(Dialog)

@@ -7,7 +7,11 @@ import user from './user'
 import meetingList from './meeting-list'
 import msgLIst from './msg-list'
 import addressList from './address-list'
+import pressList from './press-list'
+import waitList from './wait-list'
+import informList from './inform-list'
 import emailList from './email-list'
+import loginForm from './login-form'
 import normalForm from './normal-form'
 import receiveForm from './receive-form'
 import meetingForm from './meeting-form'
@@ -18,7 +22,11 @@ const mocks = [
   ...meetingList,
   ...msgLIst,
   ...addressList,
+  ...pressList,
+  ...waitList,
+  ...informList,
   ...emailList,
+  ...loginForm,
   ...normalForm,
   ...receiveForm,
   ...meetingForm,

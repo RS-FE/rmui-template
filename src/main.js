@@ -25,9 +25,6 @@ import '@/style/index.less'
 // 按需引入UI库 vant
 import '@/plugins/vant'
 
-// 上拉加载插件
-import '@/plugins/vue-scroll'
-
 // tree 插件
 import '@/plugins/tree'
 

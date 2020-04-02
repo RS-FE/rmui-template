@@ -162,7 +162,7 @@
 
 <script>
 import {parseTime} from '@/utils/index.js'
-import {getMeetingForm} from '@/api/meeting-form.js'
+import {getData, submitData} from '@/api/meeting-form.js'
 export default {
   data() {
     return {
@@ -179,8 +179,8 @@ export default {
         theme: '会议主题',
         num: '10',
         arrive: '2020-03-31',
-        level: '小型会议',
         secrecy: true,
+        level: '小型会议',
         decorate: ['签到台'],
         equip: ['投影仪', '插线板', '激光笔']
       }
@@ -193,7 +193,7 @@ export default {
   },
   methods: {
     init() {
-      getMeetingForm()
+      getData()
         .then(res => {
           console.log(res)
           this.meetingData = res.data
@@ -203,8 +203,20 @@ export default {
         })
     },
     onSubmit(values) {
-      console.log(values)
-      this.$toast.success('控制台查看提交信息')
+      console.log('submit', values)
+      const that = this
+      submitData(values)
+        .then(() => {
+          that.$toast.success({
+            message: '提交成功',
+            onClose() {
+              // that.$router.push({path: '/home'}).catch(err => err)
+            }
+          })
+        })
+        .catch(() => {
+          this.$toast.fail('提交失败')
+        })
     },
     onConfirmTime(time) {
       this.meetingData.time = parseTime(time, '{y}-{m}-{d}')

@@ -7,10 +7,10 @@ const state = {
           path: 'meeting-list',
           title: '会议室预约列表'
         },
-        {
-          path: 'meeting-list2',
-          title: '会议室预约列表2'
-        },
+        // {
+        //   path: 'meeting-list2',
+        //   title: '会议室预约列表2'
+        // },
         {
           path: 'msg-list',
           title: '消息列表'
@@ -31,10 +31,10 @@ const state = {
           path: 'press-list',
           title: '新闻列表'
         },
-        {
-          path: 'falls-list',
-          title: '瀑布列表'
-        },
+        // {
+        //   path: 'falls-list',
+        //   title: '瀑布列表'
+        // },
         {
           path: 'email-list',
           title: '邮件列表'
@@ -47,6 +47,10 @@ const state = {
         {
           path: 'login-form',
           title: '登录注册'
+        },
+        {
+          path: 'login-form2',
+          title: '登录注册2'
         },
         {
           path: 'normal-form',

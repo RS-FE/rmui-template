@@ -38,16 +38,18 @@
     <!-- 已选择列表   -->
     <van-popup v-model="isshowPopup" position="bottom" :style="{height: '70%'}">
       <div class="rs-bar">
-        <van-checkbox v-model="Allchecked" shape="square" class="list_checkAll">取消全选</van-checkbox>
+        <van-checkbox v-model="Allchecked" shape="square" class="list_checkAll" @click="onAllchecked"
+          >取消全选</van-checkbox
+        >
         <div class="rs-show-num">已选择：{{ unitNum }}个单位，{{ userNum }}个人</div>
       </div>
       <ul class="rs-list">
-        <li data-id v-for="(k, i) in selectedData" :key="i" v-show="k.checked">
-          <van-checkbox v-model="k.checked" shape="square">
-            <i class="rs-icon" :class="{'rs-icon-user': !k.children}"></i>
+        <li v-for="(k, i) in selectedData" :key="i">
+          <van-checkbox v-model="k.checked" shape="square" @change="onCheckedChange(k)">
+            <i class="rs-icon" :class="{'rs-icon-user': !k.isParent}"></i>
             <span class="rs-text">{{ k.title }}</span>
           </van-checkbox>
-          <van-icon name="cross" class="rs-cancer" />
+          <van-icon name="cross" class="rs-cancer" @click="oncancer(k)" />
         </li>
       </ul>
     </van-popup>
@@ -75,6 +77,20 @@ export default {
   beforeDestroy: function() {
     document.querySelector('body').style.backgroundColor = ''
   },
+  watch: {
+    selectedData: function(data) {
+      // console.log(data)
+      this.unitNum = 0
+      this.userNum = 0
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].isParent) {
+          this.unitNum++
+        } else {
+          this.userNum++
+        }
+      }
+    }
+  },
   mounted() {
     this.init()
   },
@@ -83,11 +99,34 @@ export default {
       getAddressList()
         .then(res => {
           this.treeData = res.data.items
+          this.setData(this.treeData)
         })
         .catch(() => {})
     },
+    setData(data) {
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].children) {
+          this.$set(data[i], 'isParent', true)
+        } else {
+          this.$set(data[i], 'isParent', false)
+        }
+
+        if (data[i].children != '' && data[i].children != null) {
+          this.setData(data[i].children)
+        }
+      }
+    },
+    // 搜索
     onSearch() {
       this.$refs.tree.searchNodes(this.searchword)
+    },
+    //全选
+    onAllchecked() {
+      for (var i = 0; i < this.selectedData.length; i++) {
+        this.selectedData[i].checked = !this.Allchecked
+        // this.treeData[i].checked = !this.Allchecked
+        this.$set(this.treeData, i, {checked: !this.Allchecked})
+      }
     },
     // tpl (node, ctx, parent, index, props) {
     tpl(...args) {
@@ -127,25 +166,23 @@ export default {
         this.$refs.tree.childCheckedHandle(node, checked)
       }
     },
+    // 树选择事件
     onselect(node) {
       console.log(node)
-      this.unitNum = 0
-      this.userNum = 0
       this.selectedData = []
 
-      var CheckedNodes = this.$refs.tree.getCheckedNodes({isOriginal: true})
-      for (var j = 0; j < CheckedNodes.length; j++) {
-        if (CheckedNodes[j].checked) {
-          this.selectedData.push(CheckedNodes[j])
-
-          if (CheckedNodes[j].children) {
-            this.unitNum++
-          } else {
-            this.userNum++
+      var nodes = this.$refs.tree.getNodes()
+      // console.log(nodes)
+      for (var j = 0; j < nodes.length; j++) {
+        if (!nodes[j].parentCheckedToChildren) {
+          if (nodes[j].checked || (nodes[j].checked && nodes[j].halfcheck)) {
+            this.selectedData.push(nodes[j])
           }
         }
       }
+      // console.log(this.selectedData)
     },
+    // 点击弹窗弹出
     showPopup() {
       if (this.selectedData.length == 0) {
         this.$toast('请添加联系人')
@@ -154,13 +191,39 @@ export default {
       // 弹出弹窗
       this.isshowPopup = !this.isshowPopup
     },
+    // 确定
     onconfirm() {
       console.log(this.selectedData)
+    },
+    // 已选列表删除
+    oncancer(node) {
+      // console.log(node)
+      for (var i = this.selectedData.length - 1; i >= 0; i--) {
+        if (this.selectedData[i].title == node.title) {
+          this.selectedData.splice(i, 1)
+          break
+        }
+      }
+      // 无选择隐藏弹窗
+      if (this.selectedData.length == 0) {
+        this.isshowPopup = false
+      }
+    },
+    // 已选列表选择取消
+    onCheckedChange(node) {
+      for (var i = this.treeData.length - 1; i >= 0; i--) {
+        if (this.treeData[i].title == node.title) {
+          // console.log(this.treeData[i])
+          // console.log(node)
+          this.$set(this.treeData, i, node)
+          break
+        }
+      }
     }
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .rs-AddressList {
   .van-search {
     .van-search__content {
@@ -358,6 +421,7 @@ export default {
           top: 0;
           bottom: 0;
           width: 40px;
+          z-index: 2;
           display: flex;
           justify-content: center;
           align-items: center;

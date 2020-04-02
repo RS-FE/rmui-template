@@ -30,14 +30,14 @@ const routes = [
       title: '会议室预约列表'
     }
   },
-  {
-    name: 'meeting-list2',
-    component: () => import('@/views/meeting-list2'),
-    meta: {
-      keepAlive: false,
-      title: '会议室预约列表2'
-    }
-  },
+  // {
+  //   name: 'meeting-list2',
+  //   component: () => import('@/views/meeting-list2'),
+  //   meta: {
+  //     keepAlive: false,
+  //     title: '会议室预约列表2'
+  //   }
+  // },
   {
     name: 'msg-list',
     component: () => import('@/views/msg-list'),
@@ -78,14 +78,14 @@ const routes = [
       title: '新闻列表'
     }
   },
-  {
-    name: 'falls-list',
-    component: () => import('@/views/falls-list'),
-    meta: {
-      keepAlive: false,
-      title: '瀑布列表'
-    }
-  },
+  // {
+  //   name: 'falls-list',
+  //   component: () => import('@/views/falls-list'),
+  //   meta: {
+  //     keepAlive: false,
+  //     title: '瀑布列表'
+  //   }
+  // },
   {
     name: 'email-list',
     component: () => import('@/views/email-list'),
@@ -101,6 +101,14 @@ const routes = [
     meta: {
       keepAlive: false,
       title: '登录注册'
+    }
+  },
+  {
+    name: 'login-form2',
+    component: () => import('@/views/login-form2'),
+    meta: {
+      keepAlive: false,
+      title: '登录注册2'
     }
   },
   {

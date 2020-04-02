@@ -1,33 +1,96 @@
 import Mock from 'mockjs'
 
 const meetingList = Mock.mock({
-  'items|8': [
+  items: [
     {
-      id: '@id',
-      'status|1': ['1', '2'],
-      'roomname|1': ['A座会议室', 'B座会议室', 'C座会议室', 'D座会议室', 'E座会议室'],
-      'capacity|1': [30, 40, 50],
-      'location|1': ['409', '410', '411'],
-      tool: ['投影仪', '会议桌椅'],
-      'ReserveData|2': [
+      fileFlag: '回字形',
+      fileSubleft: '50',
+      fileTitle: 'F楼2110会议室',
+      amList: null,
+      nightList: null,
+      pmList: [
         {
-          day: {
-            year: '2020',
-            'month|1': [3, 4, 5],
-            'day|1-30': 30
-          },
-          'time|1': ['0', '1'], // 0 上午 1 下午
-          StartTime: '08:00',
-          EndTime: '09:00',
-          name: '张长军',
-          'text|1': [
-            '关于垃圾分类的会议1关于垃圾分类的会议',
-            '关于垃圾分类的会议2',
-            '关于垃圾分类的会议3',
-            '关于垃圾分类的会议4'
-          ]
+          fileSubright: '吴春鸿',
+          fileTitle: '综合监督单位季度工作例会',
+          fileType: '下午场'
         }
       ]
+    },
+    {
+      amList: null,
+      fileFlag: '圆形',
+      fileSubleft: '22',
+      fileSubright: 'F座2210室',
+      fileTitle: 'F楼2210会议室（书记会议室）',
+      nightList: null,
+      pmList: null
+    },
+    {
+      amList: null,
+      fileContent: '音响 投影仪 钉钉无线投屏',
+      fileFlag: '回字形',
+      fileSubleft: '40',
+      fileSubright: 'F座2306室',
+      fileTitle: 'F楼2306会议室（常委会议室）',
+      nightList: null,
+      pmList: null
+    },
+    {
+      amList: null,
+      fileFlag: '课桌式',
+      fileSubleft: '40',
+      fileSubright: 'F座2313室',
+      fileTitle: 'F楼2313会议室',
+      nightList: null,
+      pmList: null
+    },
+    {
+      amList: null,
+      fileContent: '音响 投影仪',
+      fileFlag: '回字形',
+      fileSubleft: '100',
+      fileSubright: 'EF座23楼连廊',
+      fileTitle: 'R6会议室（常委会议室）',
+      nightList: null,
+      pmList: null
+    },
+    {
+      amList: null,
+      fileContent: '投影仪 音响',
+      fileFlag: '回字形',
+      fileSubleft: '20',
+      fileSubright: 'F座2401室',
+      fileTitle: 'F楼2401会议室',
+      nightList: null,
+      pmList: null
+    },
+    {
+      amList: null,
+      fileFlag: '回字形',
+      fileSubleft: '18',
+      fileSubright: 'F座2413室',
+      fileTitle: 'F楼2413会议室',
+      nightList: null,
+      pmList: null
+    },
+    {
+      amList: null,
+      fileContent: '投影仪',
+      fileFlag: '回字形 课桌式',
+      fileSubleft: '18',
+      fileSubright: 'F座2502室',
+      fileTitle: 'F楼2502会议室',
+      nightList: null,
+      pmList: null
+    },
+    {
+      amList: null,
+      fileFlag: '回字形',
+      fileSubleft: '18',
+      fileSubright: 'F座2615室',
+      fileTitle: 'F楼2615会议室',
+      nightList: null,
+      pmList: null
     }
   ]
 })
@@ -39,13 +102,7 @@ export default [
     type: 'get',
     response: config => {
       const items = meetingList.items
-      return {
-        code: 20000,
-        data: {
-          total: items.length,
-          items: items
-        }
-      }
+      return {code: 20000, data: {total: items.length, items: items}}
     }
   }
 ]

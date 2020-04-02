@@ -12,12 +12,23 @@ const emailForm = Mock.mock({
 export default [
   // 邮件表单获取数据
   {
-    url: '/rmui-template/email-form/getform',
+    url: '/rmui-template/email-form/getData',
     type: 'get',
     response: config => {
       return {
         code: 20000,
         data: emailForm
+      }
+    }
+  },
+  // 邮件表单提交数据
+  {
+    url: '/rmui-template/email-form/submitData',
+    type: 'post',
+    response: config => {
+      return {
+        code: 20000,
+        data: 'success'
       }
     }
   }

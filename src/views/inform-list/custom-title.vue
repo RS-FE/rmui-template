@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .demo-nav {
   position: relative;
   height: 56px;

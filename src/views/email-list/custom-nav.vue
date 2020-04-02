@@ -16,24 +16,30 @@ export default {
     return {
       path:
         'M296.114 508.035c-3.22-13.597.473-28.499 11.079-39.105l333.912-333.912c16.271-16.272 42.653-16.272 58.925 0s16.272 42.654 0 58.926L395.504 498.47l304.574 304.574c16.272 16.272 16.272 42.654 0 58.926s-42.654 16.272-58.926 0L307.241 528.058a41.472 41.472 0 0 1-11.127-20.023z',
-      customTitle: true
+      customTitle: true,
+      operaText: ''
     }
   },
   computed: {
     title() {
       const meta = this.$route.meta || {}
       return meta.title !== '主页' ? meta.title : ''
-    },
-    operaText() {
-      const meta = this.$route.meta || {}
-      return meta.customTitle ? meta.customTitle : ''
     }
+  },
+  mounted() {
+    const meta = this.$route.meta || {}
+    this.operaText = meta.customTitle ? meta.customTitle : ''
   },
   methods: {
     onBack() {
       history.back()
     },
     onOpera() {
+      if (this.operaText == '操作') {
+        this.operaText = '取消'
+      } else {
+        this.operaText = '操作'
+      }
       this.$store.commit('changeEmailListMode')
     }
   }

@@ -1,14 +1,15 @@
 import Mock from 'mockjs'
 
 const msgList = Mock.mock({
-  items: [
+  'items|4': [
     {
       time: '08-08 12:08',
       data: [
         {
           type: 1,
-          title: '杭州疫情出入证明',
+          title: '新邮件通知',
           name: '姓名',
+          content: '已为你生成本月考勤邮件已为你生成本月考勤邮件',
           time: '2020年3月21日'
         },
         {
@@ -18,7 +19,7 @@ const msgList = Mock.mock({
           time: '19:56',
           day: '02月12日',
           time2: '02-12 18:00',
-          site: '浙江省杭州市浙江省杭州市浙江省杭州市'
+          site: '湖北省湖北省湖北省湖北省湖北省'
         },
         {
           type: 3,
@@ -28,7 +29,7 @@ const msgList = Mock.mock({
           day: '02月12日',
           month: 2,
           time2: '02-12 18:00',
-          site: '浙江省杭州市浙江省杭州市浙江省杭州市',
+          site: '湖北省湖北省湖北省湖北省湖北省',
           anomaly: 12
         }
       ]
@@ -38,8 +39,9 @@ const msgList = Mock.mock({
       data: [
         {
           type: 1,
-          title: '杭州疫情出入证明',
+          title: '新邮件通知',
           name: '姓名',
+          content: '已为你生成本月考勤邮件已为你生成本月考勤邮件',
           time: '2020年3月21日'
         },
         {
@@ -50,7 +52,7 @@ const msgList = Mock.mock({
           day: '02月12日',
           month: 2,
           time2: '02-12 18:00',
-          site: '浙江省杭州市浙江省杭州市浙江省杭州市',
+          site: '湖北省湖北省湖北省湖北省湖北省',
           anomaly: 12
         }
       ]

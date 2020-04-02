@@ -1,0 +1,30 @@
+{
+  "id": "1731162",
+  "name": "new",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "433875",
+      "name": "weibo",
+      "font_class": "weibo",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "949611",
+      "name": "aui-icon-weichat",
+      "font_class": "aui-icon-weichat",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "13743982",
+      "name": "qq",
+      "font_class": "qq",
+      "unicode": "e68d",
+      "unicode_decimal": 59021
+    }
+  ]
+}
